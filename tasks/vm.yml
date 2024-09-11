@@ -27,11 +27,7 @@
 - name: "{{ vm.name }} :: cloud-config image "
   shell:
     creates: /virt/vms/{{ vm.name }}/cloud-config.img
-    cmd: >-
-      cloud-localds
-       --network-config=/virt/vms/{{ vm.name }}/network-config-v2.yml
-       /virt/vms/{{ vm.name }}/cloud-config.img
-       /virt/vms/{{ vm.name }}/cloud-config.yml
+    cmd:  cloud-localds --network-config=/virt/vms/{{ vm.name }}/network-config-v2.yml /virt/vms/{{ vm.name }}/cloud-config.img /virt/vms/{{ vm.name }}/cloud-config.yml
   when: vm_stat.stat.exists == false
 
 
@@ -62,7 +58,6 @@
         --os-variant ubuntu18.04
         --virt-type kvm
         --graphics none
-        --network bridge={{ vm.bridge|default('default') }},model=virtio
         --import
   when: vm_stat.stat.exists == false
 
